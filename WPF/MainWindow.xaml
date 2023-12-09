@@ -1,0 +1,122 @@
+﻿<Window x:Class="WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="575" Width="815" Loaded="Window_Loaded" Activated="Window_Activated">
+    <Grid Margin="0,0,0,20">
+        <TabControl Name="tabControl" Margin="0,10,0,22" SelectionChanged="tabControl_SelectionChanged" MouseLeftButtonDown="tabControl_MouseLeftButtonDown" >
+            <TabItem Header="Заказы" MouseDown="TabItem_MouseDown" Loaded="TabItem_Loaded">
+                <Grid x:Name="grid" Height="494" Background="#fff" RenderTransformOrigin="0.196,0.412" >
+                    <DataGrid x:Name="gridBooking" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,10,294" AreRowDetailsFrozen="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" ColumnWidth="*" >
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#5177c4"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#5177c4"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
+                    </DataGrid>
+                    <Label Content="Дата заказа:" HorizontalAlignment="Left" Margin="18,200,0,0" VerticalAlignment="Top" Height="26" Width="121"/>
+                    <Label Content="Комплектующие:" HorizontalAlignment="Left" Margin="18,246,0,0" VerticalAlignment="Top" Height="26" Width="121"/>
+                    <Label Content="Услуга:" HorizontalAlignment="Left" Margin="168,200,0,0" VerticalAlignment="Top" Height="26" Width="121"/>
+                    <ComboBox x:Name="comboBoxSevice" HorizontalAlignment="Left" Margin="168,228,0,0" VerticalAlignment="Top" Width="163">
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="Background" Value="#FF97B0FF"/>
+                            </Style>
+                        </ComboBox.Style>
+                        <ComboBoxItem Content="Замена"/>
+                        <ComboBoxItem Content="Очистка"/>
+                        <ComboBoxItem Content="Сборка"/>
+                    </ComboBox>
+                    <Label Content="Цена:" HorizontalAlignment="Left" Margin="17,290,0,0" VerticalAlignment="Top" Height="26" Width="121"/>
+                    <TextBox x:Name="enterPrice" HorizontalAlignment="Left" Margin="18,316,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="18" Background="#FF97B0FF"/>
+                    <Label Content="Срок гарантии:" HorizontalAlignment="Left" Margin="18,334,0,0" VerticalAlignment="Top" Height="26" Width="121"/>
+                    <TextBox x:Name="enterWarranty" HorizontalAlignment="Left" Margin="18,360,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="18" Background="#FF9BB0FF"/>
+                    <Label Content="Клиент:" HorizontalAlignment="Left" Margin="168,266,0,0" VerticalAlignment="Top" Height="26" Width="121"/>
+                    <ComboBox x:Name="comboBoxClient" HorizontalAlignment="Left" Margin="169,292,0,0" VerticalAlignment="Top" Width="162">
+                    </ComboBox>
+                    <Button Content="Сохранить" HorizontalAlignment="Left" Margin="168,330,0,0" VerticalAlignment="Top" Width="121" Click="Button_Click_1" RenderTransformOrigin="0.5,0.5" Background="#FF97B0FF"/>
+                    <DatePicker x:Name="enterDateOrder" HorizontalAlignment="Left" Margin="18,224,0,0" VerticalAlignment="Top" Width="120" Background="#FF97B0FF"/>
+                    <TextBox x:Name="enterCompleting" HorizontalAlignment="Left" Margin="19,270,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="22" Background="#FF97B0FF"/>
+                    <Button Content="Удалить" HorizontalAlignment="Left" Margin="702,224,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click_2" Background="#FF97B0FF"/>
+                    <Label Content="Клиент:" HorizontalAlignment="Left" Margin="656,269,0,0" VerticalAlignment="Top" Height="26" Width="120"/>
+                    <ComboBox x:Name="comboBoxClientFilter" HorizontalAlignment="Left" Margin="656,302,0,0" VerticalAlignment="Top" Width="120" Background="#FF97B0FF"/>
+                    <Button Content="Фильтровать" HorizontalAlignment="Left" Margin="676,343,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_4" Background="#FF97B0FF"/>
+                    <Button Content="Отмена" HorizontalAlignment="Left" Margin="571,343,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click_3" Background="#FF97B0FF"/>
+                    <Label Content="Скидка:" HorizontalAlignment="Left" Margin="530,269,0,0" VerticalAlignment="Top" Height="26" Width="121"/>
+                    <CheckBox x:Name="checkDiscountFilter" Content="Наличие скидки" HorizontalAlignment="Left" Margin="530,307,0,0" VerticalAlignment="Top" Background="#FF97B0FF"/>
+                    <Button Content="Выполнен" HorizontalAlignment="Left" Margin="609,224,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click_5" Background="#FF97B0FF"/>
+                    <Button x:Name="Pay" Content="Оплачен" HorizontalAlignment="Left" Margin="516,224,0,0" VerticalAlignment="Top" Width="74" Click="Pay_Click" Background="#FF97B0FF" />
+                    <Button x:Name="OutputInWord" Content="Word" HorizontalAlignment="Left" Margin="719,381,0,0" VerticalAlignment="Top" Width="57" Click="OutputInWord_Click" Background="#FF28A1FF"/>
+                    <Button x:Name="OutputInExcel" Content="Excel" HorizontalAlignment="Left" Margin="635,380,0,0" VerticalAlignment="Top" Width="61" Click="OutputInExcel_Click" Background="#FF26E689"/>
+                    <Label Content="Поиск:" HorizontalAlignment="Left" Margin="353,205,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="EnterSearch" HorizontalAlignment="Left" Margin="353,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="132" Height="22" TextChanged="EnterSearch_TextChanged" Background="#FF97B0FF"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Clients" Header="Клиенты">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="gridClient" d:ItemsSource="{d:SampleData ItemCount=5}" ColumnWidth="*" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" Height="198" VerticalAlignment="Top">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#5177c4"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#5177c4"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
+                    </DataGrid>
+                    <TextBox x:Name="EnterName" HorizontalAlignment="Left" Margin="10,226,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Background="#FF97B0FF"/>
+                    <Label Content="Имя:" HorizontalAlignment="Left" Margin="11,203,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Фамилия:" HorizontalAlignment="Left" Margin="11,244,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="EnterSurname" HorizontalAlignment="Left" Margin="10,270,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Background="#FF97B0FF"/>
+                    <Label Content="Отчество:" HorizontalAlignment="Left" Margin="10,288,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="EnterPatronymic" HorizontalAlignment="Left" Margin="11,314,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Background="#FF97B0FF"/>
+                    <TextBox x:Name="EnterPhone" HorizontalAlignment="Left" Margin="151,226,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Background="#FF97B0FF"/>
+                    <Label Content="Телефон:" HorizontalAlignment="Left" Margin="151,203,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Скидка:" HorizontalAlignment="Left" Margin="151,244,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="EnterDiscount" HorizontalAlignment="Left" Margin="151,270,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Background="#FF97B0FF"/>
+                    <Button x:Name="buttonAddClient" Content="Сохранить" HorizontalAlignment="Left" Margin="151,314,0,0" VerticalAlignment="Top" Width="120" Click="buttonAddClient_Click" Background="#FF97ABFF"/>
+                    <Button x:Name="buttondeleteClient" Content="Удалить" HorizontalAlignment="Left" Margin="702,0,0,0" VerticalAlignment="Center" Width="67" Click="buttondeleteClient_Click" Background="#FF97B0FF"/>
+                    <Button x:Name="ChangingClientData" Content="Изменить" HorizontalAlignment="Left" Margin="604,0,0,0" VerticalAlignment="Center" Width="70" Click="ChangingClientData_Click" Background="#FF97B0FF"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="График" MouseDown="TabItem_MouseDown_1">
+                <lvc:CartesianChart Name="chart">
+                </lvc:CartesianChart>
+
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>
